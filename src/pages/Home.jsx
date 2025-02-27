@@ -97,7 +97,7 @@ const BookList = () => {
       <Slideshow />
       <div className="relative w-full overflow-hidden">
         <img
-          src="/src/bg/bgtree.gif"
+          src="/bg/bgtree.gif"
           alt="Background Animation"
           className="absolute top-0 left-0 w-full h-40 object-cover"
         />
