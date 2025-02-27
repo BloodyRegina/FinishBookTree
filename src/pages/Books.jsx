@@ -14,6 +14,7 @@ const Books = () => {
     if (category_id) {
       BookCategoryService.getBooksByCategory(category_id)
         .then((response) => {
+          // ข้อมูลที่ได้จาก API จะอยู่ในรูปแบบใหม่ที่แปลงแล้ว
           setBooks(response.data);
         })
         .catch((e) => {
@@ -27,7 +28,7 @@ const Books = () => {
 
   return (
     <Layout>
-      <div className=" p-6 rounded-lg  max-w-6xl mx-auto">
+      <div className="p-6 rounded-lg max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">📚 หนังสือในหมวดหมู่นี้</h1>
         {loading ? (
           <div className="flex justify-center items-center h-32">
@@ -35,27 +36,26 @@ const Books = () => {
           </div>
         ) : books.length > 0 ? (
           <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {books.map((bookData) => (
+            {books.map((book) => (
               <NavLink
-                key={bookData.book.book_id}
-                to={`/content/${bookData.book.book_id}`}
+                key={book.book_id}
+                to={`/content/${book.book_id}`}
                 className="group"
               >
                 <li className="p-5 bg-white rounded-xl shadow-md hover:shadow-lg transition-all border border-gray-200 hover:border-gray-400 overflow-hidden">
                   <div className="relative w-full h-60 overflow-hidden rounded-lg">
                     <img
-                      src={`http://localhost:4000/images/${bookData.book.book_photo}`}
-                      alt={bookData.book.title}
+                      src={book.book_photo} // ใช้ URL ที่แปลงแล้ว
+                      alt={book.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                   <div className="mt-4">
                     <h3 className="text-lg font-semibold text-gray-900 truncate">
-                      {bookData.book.title}
+                      {book.title}
                     </h3>
-                    <p className="text-gray-600 text-sm">✍️ {bookData.book.author}</p>
-                    <p className="text-gray-500 text-xs">📅 ปีที่พิมพ์: {bookData.book.publish_year}</p>
-                  
+                    <p className="text-gray-600 text-sm">✍️ {book.author}</p>
+                    <p className="text-gray-500 text-xs">📅 ปีที่พิมพ์: {book.publish_year}</p>
                   </div>
                 </li>
               </NavLink>

@@ -18,7 +18,7 @@ const Footer = () => {
     <footer className="grid grid-cols-5 gap-8 w-full text-sm text-center bg-[#F4FCF9] text-black py-6 border-t border-gray-300">
       {/* Logo */}
       <div className="flex flex-col items-center col-span-1">
-        <img src="/pic/gogo.png" alt="Book Trees" className="ml-10" />
+        <img src="/src/pic/gogo.png" alt="Book Trees" className="ml-10" />
       </div>
 
       {/* Title */}
