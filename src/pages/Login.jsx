@@ -26,7 +26,7 @@ const Login = () => {
         <div className="flex flex-col items-center mb-8">
           <NavLink to="/">
             <img
-              src="/src/pic/gogo.png"
+              src="/pic/gogo.png"
               alt="BookTrees Logo"
               className="h-32 mb-4"
             />
