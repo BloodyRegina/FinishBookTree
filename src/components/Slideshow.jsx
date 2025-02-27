@@ -3,10 +3,10 @@ import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 const Slideshow = () => {
   const slides = [
     {
-      url: "/pic/3.1.png",
+      url: "/src/pic/3.1.png",
     },
     {
-      url: "/pic/1.png",
+      url: "/src/pic/1.png",
     },
   ];
 

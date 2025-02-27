@@ -88,7 +88,7 @@ const Navbar = () => {
                   : "text-gray-700 hover:text-black"
               }
             >
-              <img src="/pic/gogo.png" alt="BookTree" className="h-16" />
+              <img src="/src/pic/gogo.png" alt="BookTree" className="h-16" />
               <h1 className="font-medium logo text-lg">BookTree</h1>
             </NavLink>
           </div>
