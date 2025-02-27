@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
+
 const Slideshow = () => {
   const slides = [
     {
@@ -15,6 +16,7 @@ const Slideshow = () => {
 
   const slideDuration = 3000; // Duration each slide is shown in ms
   const progressInterval = 100; // Update interval for progress bar in ms
+
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;
     const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
@@ -30,6 +32,7 @@ const Slideshow = () => {
   const goToSlide = (slideIndex) => {
     setCurrentIndex(slideIndex);
   };
+
   useEffect(() => {
     // Set progress to 0 for all slides
     setProgress(Array(slides.length).fill(0));
@@ -52,31 +55,33 @@ const Slideshow = () => {
     };
   }, [currentIndex]);
 
-
   return (
-    <div className="h-[73vh] w-full relative group">
+    <div className="h-[40vh] md:h-[73vh] w-full relative group">
       <div
         style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
         className="h-full bg-center bg-cover duration-500 shadow-inner w-full"
       ></div>
       {/* Left Arrow */}
-      <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
-        <BsChevronCompactLeft onClick={prevSlide} size={30} />
+      <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-2 md:left-5 text-2xl rounded-full p-1 md:p-2 bg-black/20 text-white cursor-pointer">
+        <BsChevronCompactLeft onClick={prevSlide} size={24} />
       </div>
       {/* Right Arrow */}
-      <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
-        <BsChevronCompactRight onClick={nextSlide} size={30} />
+      <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-2 md:right-5 text-2xl rounded-full p-1 md:p-2 bg-black/20 text-white cursor-pointer">
+        <BsChevronCompactRight onClick={nextSlide} size={24} />
       </div>
-      <div className="flex justify-center py-2 absolute top-[95%] md:left-[46%] left-[38%]">
-        {slides.map((slide ,slideIndex) => (
+      <div className="flex justify-center py-2 absolute top-[90%] md:top-[95%] left-[50%] transform translate-x-[-50%]">
+        {slides.map((slide, slideIndex) => (
           <div
             key={slideIndex}
             onClick={() => goToSlide(slideIndex)}
             className="text-2xl cursor-pointer"
           >
-            <div className="rhombus1 step4 ml-2 bg-slate-200" >
+            <div className="rhombus1 step4 ml-2 bg-slate-200">
               <div id="length"></div>
-              <div id="progress_animation" style={{ width: `${progress[slideIndex]}%`, transition: `width ${progressInterval}ms linear` }}></div>
+              <div
+                id="progress_animation"
+                style={{ width: `${progress[slideIndex]}%`, transition: `width ${progressInterval}ms linear` }}
+              ></div>
             </div>
           </div>
         ))}

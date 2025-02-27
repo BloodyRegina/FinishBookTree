@@ -77,19 +77,19 @@ const BookList = () => {
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => Math.max(prevIndex - 5, 0));
+    setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
   };
 
   const prevSlide2 = () => {
-    setCurrentIndex2((prevIndex) => Math.max(prevIndex - 5, 0));
+    setCurrentIndex2((prevIndex) => Math.max(prevIndex - 1, 0));
   };
 
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) => Math.max(prevIndex + 5, 0));
+    setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, books.length - 1));
   };
 
   const nextSlide2 = () => {
-    setCurrentIndex2((prevIndex) => Math.max(prevIndex + 5, 0));
+    setCurrentIndex2((prevIndex) => Math.min(prevIndex + 1, topBooks.length - 1));
   };
 
   return (
@@ -102,28 +102,28 @@ const BookList = () => {
           className="absolute top-0 left-0 w-full h-40 object-cover"
         />
         <div className="relative flex justify-center items-center w-full h-40 bg-black bg-opacity-50">
-          <h1 className="text-6xl text-white logo">Welcome To BookTree</h1>
+          <h1 className="text-4xl md:text-6xl text-white logo">Welcome To BookTree</h1>
         </div>
       </div>
 
-      <div className=" p-6">
+      <div className="p-6">
         {/* หนังสือใหม่ รายสัปดาห์ */}
         <div className="relative overflow-hidden w-full px-4">
-          <h1 className="text-3xl font-bold ml-5 mb-4">
+          <h1 className="text-2xl md:text-3xl font-bold ml-5 mb-4">
             📚 หนังสือใหม่ รายสัปดาห์
           </h1>
           <div
             className="flex transition-transform duration-500"
-            style={{ transform: `translateX(-${(currentIndex * 100) / 5}%)` }}
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
             {books.map((book) => (
-              <div key={book._id} className="w-1/5 flex-none p-2">
+              <div key={book._id} className="w-full md:w-1/5 flex-none p-2">
                 <Link to={`/content/${book._id}`}>
-                  <div className="bg-white p-3 rounded-lg shadow-lg w-auto mb-5 flex flex-col justify-between h-[500px]">
+                  <div className="bg-white p-3 rounded-lg shadow-lg w-auto mb-5 flex flex-col justify-between h-[400px] md:h-[500px]">
                     <img
                       src={`${book.book_photo}`}
                       alt={book.title}
-                      className="w-80 h-[4500] object-cover rounded-md mb-4"
+                      className="w-full h-64 md:h-64 object-cover rounded-md mb-4"
                     />
                     <h3 className="text-lg font-semibold text-center min-h-[48px] flex items-center justify-center">
                       {book.title}
@@ -136,41 +136,41 @@ const BookList = () => {
               </div>
             ))}
           </div>
-          {currentIndex + 5 < books.length && (
+          {currentIndex < books.length - 1 && (
             <button
               onClick={nextSlide}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 rounded-full"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-black/20"
             >
-              <ChevronRight size={44} />
+              <ChevronRight size={24} className="text-white" />
             </button>
           )}
           {currentIndex > 0 && (
             <button
               onClick={prevSlide}
-              className="absolute left-2 top-1/2 transform -translate-y-1/2 p-2 rounded-full"
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-black/20"
             >
-              <ChevronLeft size={44} />
+              <ChevronLeft size={24} className="text-white" />
             </button>
           )}
         </div>
 
         {/* หนังสือยอดนิยม ตลอดกาล */}
         <div className="relative overflow-hidden w-full px-4 mt-10">
-          <h1 className="text-3xl font-bold ml-5 mb-4">
+          <h1 className="text-2xl md:text-3xl font-bold ml-5 mb-4">
             🔥 หนังสือยอดนิยม ตลอดกาล
           </h1>
           <div
             className="flex transition-transform duration-500"
-            style={{ transform: `translateX(-${(currentIndex2 * 100) / 5}%)` }}
+            style={{ transform: `translateX(-${currentIndex2 * 100}%)` }}
           >
             {topBooks.map((book) => (
-              <div key={book._id} className="w-1/5 flex-none p-2">
+              <div key={book._id} className="w-full md:w-1/5 flex-none p-2">
                 <Link to={`/content/${book._id}`}>
-                  <div className="bg-white p-3 rounded-lg shadow-lg w-auto mb-5 flex flex-col justify-between h-[500px]">
+                  <div className="bg-white p-3 rounded-lg shadow-lg w-auto mb-5 flex flex-col justify-between h-[400px] md:h-[500px]">
                     <img
                       src={`${book.book_photo}`}
                       alt={book.title}
-                      className="w-80 h-[4500] object-cover rounded-md mb-4"
+                      className="w-full h-48 md:h-64 object-cover rounded-md mb-4"
                     />
                     <h3 className="text-lg font-semibold text-center min-h-[48px] flex items-center justify-center">
                       {book.title}
@@ -183,20 +183,20 @@ const BookList = () => {
               </div>
             ))}
           </div>
-          {currentIndex2 < 5 && ( // ปุ่มหายไปเมื่อถึงหน้าที่สอง (index 5)
+          {currentIndex2 < topBooks.length - 1 && (
             <button
               onClick={nextSlide2}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 rounded-full"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-black/20"
             >
-              <ChevronRight size={44} />
+              <ChevronRight size={24} className="text-white" />
             </button>
           )}
           {currentIndex2 > 0 && (
             <button
               onClick={prevSlide2}
-              className="absolute left-2 top-1/2 transform -translate-y-1/2 p-2 rounded-full"
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-black/20"
             >
-              <ChevronLeft size={44} />
+              <ChevronLeft size={24} className="text-white" />
             </button>
           )}
         </div>
@@ -204,11 +204,11 @@ const BookList = () => {
 
       {/* จัดอันดับหนังสือ/นักอ่าน */}
       <div className="w-full px-4 mt-10 pb-20">
-        <h1 className="text-3xl font-bold ml-10 mb-6 text-gray-800 ">
+        <h1 className="text-2xl md:text-3xl font-bold ml-5 mb-6 text-gray-800">
           🏆 จัดอันดับหนังสือ/นักอ่าน
         </h1>
 
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* หนังสือยอดนิยม */}
           <div className="bg-white p-6 rounded-2xl shadow-lg flex flex-col min-h-[450px]">
             <h2 className="text-xl font-bold text-center mb-4 text-gray-700">
@@ -238,7 +238,7 @@ const BookList = () => {
             </div>
           </div>
 
-          {/* หนังสือยอดนิยม */}
+          {/* นักอ่านที่มีส่วนร่วมมากที่สุด */}
           <div className="bg-white p-6 rounded-2xl shadow-lg flex flex-col min-h-[450px]">
             <h2 className="text-xl font-bold text-center mb-4 text-gray-700">
               👨‍💻 นักอ่านที่มีส่วนร่วมมากที่สุด
@@ -269,7 +269,7 @@ const BookList = () => {
             </div>
           </div>
 
-          {/* หนังสือยอดนิยม */}
+          {/* หนังสือที่ได้คะแนนมากที่สุด */}
           <div className="bg-white p-6 rounded-2xl shadow-lg flex flex-col min-h-[450px]">
             <h2 className="text-xl font-bold text-center mb-4 text-gray-700">
               ⭐ หนังสือที่ได้คะแนนมากที่สุด

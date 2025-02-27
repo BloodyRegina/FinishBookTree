@@ -15,23 +15,22 @@ const categories = [
 
 const Footer = () => {
   return (
-    <footer className="grid grid-cols-5 gap-8 w-full text-sm text-center bg-[#F4FCF9] text-black py-6 border-t border-gray-300">
+    <footer className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8 w-full text-sm text-center bg-[#F4FCF9] text-black py-6 border-t border-gray-300 px-4">
       {/* Logo */}
       <div className="flex flex-col items-center col-span-1">
-        <img src="/pic/gogo.png" alt="Book Trees" className="ml-10" />
+        <img src="/pic/gogo.png" alt="Book Trees" className="h-16 w-auto" />
       </div>
 
       {/* Title */}
-      <div className="flex flex-col justify-center col-span-1 pl-24">
-        <h1 className="text-8xl font-custom logo">Book</h1>
-      </div>
-      <div className="flex flex-col justify-center col-span-1 pr-96">
-        <h1 className="text-8xl font-custom logo">Trees</h1>
+      <div className="flex flex-col justify-center col-span-1 md:col-span-2 lg:col-span-1">
+        <h1 className="text-4xl md:text-6xl lg:text-8xl font-custom logo">Book</h1>
+        <h1 className="text-4xl md:text-6xl lg:text-8xl font-custom logo">Trees</h1>
       </div>
 
-      <div className="space-x-4 flex">
+      {/* Categories and About */}
+      <div className="col-span-1 md:col-span-2 lg:col-span-1 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8">
         {/* Categories */}
-        <div className="col-span-1">
+        <div className="flex-1">
           <h2 className="font-semibold">หมวดหมู่</h2>
           <ul className="space-y-1">
             {categories.map((category) => (
@@ -48,7 +47,7 @@ const Footer = () => {
         </div>
 
         {/* About */}
-        <div className="col-span-1">
+        <div className="flex-1">
           <h2 className="font-semibold">เกี่ยวกับ</h2>
           <ul className="space-y-1">
             <li>
@@ -66,34 +65,29 @@ const Footer = () => {
       </div>
 
       {/* Social Icons */}
-      <div className="col-span-1 flex flex-col items-center">
+      <div className="col-span-1 md:col-span-3 lg:col-span-1 flex flex-col items-center">
         <h2 className="font-semibold">ติดตามเรา</h2>
         <div className="flex justify-center space-x-4 mt-2">
-          <a href="https://www.youtube.com/watch?v=iKR02ihc3sU"
-          target="blank">
-          <X size={20} className="cursor-pointer" />
+          <a href="https://www.youtube.com/watch?v=iKR02ihc3sU" target="blank">
+            <X size={20} className="cursor-pointer" />
           </a>
-          <a href="https://www.youtube.com/watch?v=iKR02ihc3sU"
-          target="blank">
-          <Youtube size={20} className="cursor-pointer" />
+          <a href="https://www.youtube.com/watch?v=iKR02ihc3sU" target="blank">
+            <Youtube size={20} className="cursor-pointer" />
           </a>
-          <a href="https://www.instagram.com/nutchanon.n_/"
-          target="blank">
-          <Instagram size={20} className="cursor-pointer" />
+          <a href="https://www.instagram.com/nutchanon.n_/" target="blank">
+            <Instagram size={20} className="cursor-pointer" />
           </a>
-          <a href="https://www.facebook.com/profile.php?id=100026794388587#"
-          target="blank">
-          <Facebook size={20} className="cursor-pointer" />
+          <a href="https://www.facebook.com/profile.php?id=100026794388587#" target="blank">
+            <Facebook size={20} className="cursor-pointer" />
           </a>
-          <a href="https://www.youtube.com/watch?v=iKR02ihc3sU"
-          target="blank">
-          <Gamepad2 size={20} className="cursor-pointer" />
+          <a href="https://www.youtube.com/watch?v=iKR02ihc3sU" target="blank">
+            <Gamepad2 size={20} className="cursor-pointer" />
           </a>
         </div>
       </div>
 
       {/* Copyright */}
-      <div className="col-span-5 text-sm text-gray-600 mt-4 border-t pt-2 w-full text-center">
+      <div className="col-span-1 md:col-span-3 lg:col-span-5 text-sm text-gray-600 mt-4 border-t pt-2 w-full text-center">
         © 2025 BookTrees | All rights reserved.
       </div>
     </footer>

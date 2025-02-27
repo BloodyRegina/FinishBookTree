@@ -7,6 +7,7 @@ import Layout from "../components/Layout";
 import UserService from "../Services/User.service";
 import { jwtDecode } from "jwt-decode";
 import http from "../http-common";
+
 const Content = () => {
   const { id } = useParams(); // ดึง book_id จาก URL
   const [book, setBook] = useState(null);
@@ -22,6 +23,7 @@ const Content = () => {
   const handleRatingSelect = (rating) => {
     setSelectedRating(rating); // อัปเดตค่าคะแนนที่เลือก
   };
+
   // 📌 โหลดข้อมูลหนังสือจาก API
   useEffect(() => {
     const fetchBookData = async () => {
@@ -47,7 +49,7 @@ const Content = () => {
     fetchBookData();
     fetchTopBooks();
   }, [id]);
-  
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -83,55 +85,56 @@ const Content = () => {
       alert("❌ ไม่สามารถเพิ่มลงคลังหนังสือได้!");
     }
   };
+
   const handleStartReading = async (book_id) => {
     console.log("📌 Start reading for book:", id);
     try {
-      
-  
       const readingListId = await getReadingListId(id);
       if (!readingListId) {
         throw new Error("Reading list entry not found");
       }
-  
+
       await ReadingListService.startReading(readingListId);
       console.log("✅ เริ่มอ่านหนังสือเรียบร้อย!");
     } catch (error) {
+      console.error("❌ Error starting reading:", error);
     }
   };
+
   const getReadingListId = async (book_id) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
-  
+
       const decoded = jwtDecode(token);
       const user_id = decoded.userId;
-  
+
       if (!user_id || !book_id) {
         throw new Error("Invalid user_id or book_id");
       }
-  
-      console.log("User ID:", user_id); 
+
+      console.log("User ID:", user_id);
       console.log("Book ID:", book_id);
-  
+
       // แก้ไขการส่งข้อมูลผ่าน query parameters แทน `body`
       const response = await http.get(`/readings/find/by-user-and-book`, {
         params: { user_id, book_id }, // ใช้ params แทน body
         headers: { Authorization: `Bearer ${token}` },
       });
-  
+
       console.log("Response from Back-end:", response.data);
-  
+
       if (!response.data || !response.data.reading_id) {
         throw new Error("Reading list entry not found");
       }
-  
+
       return response.data.reading_id;
     } catch (error) {
       console.error("❌ Error fetching reading list ID:", error.response?.data || error.message);
       throw error;
     }
   };
-  
+
   const handleAddReview = async (e) => {
     e.preventDefault();
 
@@ -194,6 +197,7 @@ const Content = () => {
       setSelectedRating(0);
     }
   };
+
   if (!book) return <p>Loading...</p>;
 
   return (
@@ -221,14 +225,14 @@ const Content = () => {
 
               {book.html_content && (
                 <a
-                href={book.html_content}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() =>handleStartReading(id)}
-                className="bg-green-600 hover:bg-green-700 text-white text-lg px-6 py-2 rounded-lg shadow-md transition-all w-full md:w-auto text-center"
-              >
-                อ่านหนังสือ
-              </a>
+                  href={book.html_content}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => handleStartReading(id)}
+                  className="bg-green-600 hover:bg-green-700 text-white text-lg px-6 py-2 rounded-lg shadow-md transition-all w-full md:w-auto text-center"
+                >
+                  อ่านหนังสือ
+                </a>
               )}
             </div>
           </div>
@@ -236,21 +240,21 @@ const Content = () => {
 
         {/* 🔥 หนังสือยอดนิยม */}
         <div className="relative overflow-hidden w-full px-4 mt-10">
-          <h1 className="text-3xl font-bold ml-5 mb-4">
+          <h1 className="text-2xl md:text-3xl font-bold ml-5 mb-4">
             🔥 หนังสือยอดนิยม ตลอดกาล
           </h1>
           <div
             className="flex transition-transform duration-500"
-            style={{ transform: `translateX(-${(currentIndex2 * 100) / 5}%)` }}
+            style={{ transform: `translateX(-${currentIndex2 * 100}%)` }}
           >
             {topBooks.map((topBook) => (
-              <div key={topBook._id} className="w-1/5 flex-none p-2">
+              <div key={topBook._id} className="w-full md:w-1/5 flex-none p-2">
                 <Link to={`/content/${topBook._id}`}>
-                  <div className="bg-white p-3 rounded-lg shadow-lg w-auto mb-5 flex flex-col justify-between h-[500px]">
+                  <div className="bg-white p-3 rounded-lg shadow-lg w-auto mb-5 flex flex-col justify-between h-[400px] md:h-[500px]">
                     <img
                       src={topBook.book_photo}
                       alt={topBook.title}
-                      className="w-80 h-[450px] object-cover rounded-md mb-4"
+                      className="w-full h-64 md:h-64 object-cover rounded-md mb-4"
                     />
                     <h3 className="text-lg font-semibold text-center min-h-[48px] flex items-center justify-center">
                       {topBook.title}
@@ -265,24 +269,24 @@ const Content = () => {
           </div>
 
           {/* ปุ่มเลื่อนซ้าย-ขวา */}
-          {currentIndex2 < 5 && (
+          {currentIndex2 < topBooks.length - 1 && (
             <button
               onClick={() =>
-                setCurrentIndex2((prevIndex) => Math.max(prevIndex + 5, 0))
+                setCurrentIndex2((prevIndex) => Math.min(prevIndex + 1, topBooks.length - 1))
               }
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 rounded-full"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-black/20"
             >
-              <ChevronRight size={44} />
+              <ChevronRight size={24} className="text-white" />
             </button>
           )}
           {currentIndex2 > 0 && (
             <button
               onClick={() =>
-                setCurrentIndex2((prevIndex) => Math.max(prevIndex - 5, 0))
+                setCurrentIndex2((prevIndex) => Math.max(prevIndex - 1, 0))
               }
-              className="absolute left-2 top-1/2 transform -translate-y-1/2 p-2 rounded-full"
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-black/20"
             >
-              <ChevronLeft size={44} />
+              <ChevronLeft size={24} className="text-white" />
             </button>
           )}
         </div>
@@ -300,7 +304,7 @@ const Content = () => {
                 className="w-10 h-10 rounded-full"
               />
               <div className="flex-1">
-                <p className="font-bold">{user.username}</p> {/* ชื่อผู้งาน */}
+                <p className="font-bold">{user.username}</p> {/* ชื่อผู้ใช้งาน */}
                 <div className="flex items-center space-x-1 my-2">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <Star
@@ -308,7 +312,7 @@ const Content = () => {
                       size={24}
                       className={`cursor-pointer ${
                         selectedRating >= star
-                          ? "text-yellow-500 "
+                          ? "text-yellow-500"
                           : "text-gray-400"
                       }`}
                       onClick={() => handleRatingSelect(star)}
